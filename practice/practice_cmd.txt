@@ -1,0 +1,3 @@
+
+sudo docker search nginx
+sudo docker run -d --name nginx-server -v /opt/nginx-server:/usr/share/nginx/html:ro nginx
