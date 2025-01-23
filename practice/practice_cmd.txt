@@ -1,3 +1,17 @@
-
 sudo docker search nginx
 sudo docker run -d --name nginx-server -v /opt/nginx-server:/usr/share/nginx/html:ro nginx
+sudo docker ps -a
+sudo docker inspect 9e103249
+echo "hello,server!" | sudo tee -a /opt/nginx-server/index.html 
+curl http://172.17.0.2
+sudo docker stop 9e103249
+sudo docker rm 9e103249
+sudo netstat -tunlp | grep :80
+sudo docker run -d --name nginx-server -v /opt/nginx-server:/usr/share/nginx/html:ro -p 81:80 nginx
+curl http://127.0.0.1:81
+sudo docker rm -f e095c07
+sudo docker run -d nginx:latest
+sudo docker cp f91135c:/etc/nginx/nginx.conf /opt/nginx-server/
+sudo mkdir -p /opt/nginx-server/conf && sudo mv /opt/nginx-server/nginx.conf /opt/nginx-server/conf/
+sudo docker run -d --name nginx-server -v /opt/nginx-server:/usr/share/nginx/html:ro -v /opt/nginx-server/conf/nginx.conf:/etc/nginx/nginx.conf:ro -p 81:80 nginx
+sudo docker top nginx-server
